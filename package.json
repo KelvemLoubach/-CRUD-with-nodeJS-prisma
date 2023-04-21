@@ -7,6 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-dev": "tsx watch src/server.ts && tsc"
   },
+  "prisma":{
+    "seed":"tsx prisma/seed.ts"
+  },
   "author": "Kelvem",
   "license": "ISC",
   "dependencies": {

@@ -1,9 +1,10 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import * as controllerPosts from '../controller/post';
+import * as controllerUsers from '../controller/user';
 
 const route = Router();
 
-route.get('/', (req: Request, res: Response)=> {
-    res.send('Olá, tudo bem :(((((')
-});
+route.get('/posts', controllerPosts.posts);
+route.get('/users', controllerUsers.users);
 
 export default route;

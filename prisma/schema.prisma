@@ -11,22 +11,29 @@ datasource db {
 }
 
 model User {
-    id      Int    @id @default(autoincrement())
+    idUser  Int    @id @default(autoincrement())
     email   String @unique
     name    String
     age     Int?
 
-    posts Post[]
+    postsFildRelation Post[]
     @@map("users")
   }
 
+   //Definindo o nome do modelo da tabela "posts".
   model Post {
-    id        Int @id @default(autoincrement())
+    // Definindo o id do post, informando ao prisma que essa coluna é pk e dizendo ao db que ela será preenchida automáticamente e sequencialmete pelo banco de dados.
+    idPost    Int      @id @default(autoincrement())
     title     String
-    published Boolean @default(true)
-    body      String @db.Text
+    // Definindo o valor booleano como true.
+    published Boolean  @default(true)
+    // Definindo a coluna body como do tipo de dados "texto longo".
+    body      String   @db.Text
     authorId  Int
-    author    User @relation(fields: [authorId], references: [id])
-
+    // Definindo a relação entre as tabelas usando o atributo "@relation".
+    // Onde authorId é fk e faz referência a coluna idUser da tabela "users".
+    // Relação: (users) 1-n (posts).
+    usersFildRelation    User     @relation(fields: [authorId], references: [idUser])
+    // Usando o atributo "@@map(string)" para dizer ao prisma usar o model Post na tabela "users" no db.
     @@map("posts")
   }
