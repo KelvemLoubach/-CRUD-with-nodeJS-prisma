@@ -8,6 +8,11 @@ route.get('/posts', controllerPosts.posts);
 route.get('/users', controllerUsers.users);
 
 route.post('/createpost', controllerPosts.cretePost);
+route.post('/createuser',controllerUsers.createUser);
+
+route.put('/changepost/:id',controllerPosts.changePost);
+
+route.delete('/deletepost/:id',controllerPosts.deletePost)
 
 
 

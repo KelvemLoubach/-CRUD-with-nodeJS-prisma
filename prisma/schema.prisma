@@ -34,6 +34,6 @@ model User {
     // Onde authorId é fk e faz referência a coluna idUser da tabela "users".
     // Relação: (users) 1-n (posts).
     usersFildRelation    User     @relation(fields: [authorId], references: [idUser])
-    // Usando o atributo "@@map(string)" para dizer ao prisma para usar o model Post na tabela "users" no db.
+    // Usando o atributo "@@map(string)" para dizer ao prisma para usar o model Post na tabela "posts" no db.
     @@map("posts")
   }
