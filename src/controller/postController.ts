@@ -61,6 +61,7 @@ export const changePost = async (req: Request, res: Response) => {
         return res.status(400).json({ Erro: `Campos não preenchidos.` });
 
     } catch (err) {
+         // Caso ocorra algum erro inesperado.
         return res.status(500).json({ Error: err });
     }
 };
@@ -70,15 +71,16 @@ export const deletePost = async (req:Request, res:Response) => {
     try{
         const {id} = req.params;
         if(id){
-
+            // Enviando no parâmetro da função "deletePost" um objeto com o "id" convertido para inteiro.
            const deletePost =  await services.allPosts.deletePost({
                 id:parseInt(id)
             })
-
+            // Operado ternário para verificar se "deletePost" é "undefined" ou não.
             return deletePost !== undefined ? res.status(200).json({deletePost}) : res.status(400).json({Erro:`Post não existe.`})
 
         }
     }catch(err){
+        // Caso ocorra algum erro inesperado.
         return res.status(500).json({err})
     }
 }

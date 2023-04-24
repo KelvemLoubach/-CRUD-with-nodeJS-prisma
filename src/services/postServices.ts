@@ -64,6 +64,12 @@ export const allPosts = {
         if(postDelete){
             return postDelete;
         }
+    },
+
+    deleteUserAndPosts: async (id:number) =>{
+        await prisma.post.deleteMany({
+            where:{authorId:id}
+        })
     }
 
 };

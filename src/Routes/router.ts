@@ -12,7 +12,8 @@ route.post('/createuser',controllerUsers.createUser);
 
 route.put('/changepost/:id',controllerPosts.changePost);
 
-route.delete('/deletepost/:id',controllerPosts.deletePost)
+route.delete('/deletepost/:id',controllerPosts.deletePost);
+route.delete('/deleteuser/:id',controllerUsers.deleteUser)
 
 
 

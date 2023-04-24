@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import * as services from '../services/usersServices';
 
+
 export const users = async (req: Request, res: Response) => {
 
     // Recebendo todos os usuários.
@@ -25,3 +26,21 @@ export const createUser = async (req: Request, res: Response) => {
     return newUser !== undefined ? res.status(201).json({ newUser }) : res.status(409).json({ Erro: `Usuário já cadastrado!` });
 };
 
+export const deleteUser = async (req:Request, res:Response) => {
+
+    try{
+        const {id} = req.params;
+
+        if(id){
+            // Se existir um "id" enviamos um objeto com "id" convertido para inteiro para "deleteUser" em services.
+            const userDelete = await services.userObjectFunctions.deleteUser({
+                id:parseInt(id)
+            });
+            // Se userDelete for diferente de "undefined" retornaremos o usuário deletado, senão retornaremos um erro.
+            return userDelete !== undefined ? res.status(200).json({userDelete}) : res.status(409).json({Erro: `Usuário não encontrado.`})
+        }
+
+    }catch(err){
+        return res.status(500).json({err})
+    }
+}

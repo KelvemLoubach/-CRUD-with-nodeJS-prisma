@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import * as servicesPost from '../services/postServices';
 
 const prisma = new PrismaClient();
 
@@ -40,6 +41,22 @@ export const userObjectFunctions = {
         if (!(user)) {
             return await prisma.user.create({
                 data
+            })
+        }
+    },
+
+    deleteUser: async (data:findOneData) => {
+        // Verificamos se o usuário existe de fato no db. Esse método nativo do primsa "findUnique" retorna uma instâcia de um usuário ou "null".
+        const userDelete = await prisma.user.findUnique({
+            where:{idUser:data.id}
+        });
+
+        if(userDelete){
+            // Se "userDelete" existir vamos enviar o "id" do objeto "data" como parâmetro para a função "deleteUserAndPosts", pois como há uma relação entes as tabelas "users" e "posts" não podemos excluir um usuário sem antes excluir seus posts.
+            await servicesPost.allPosts.deleteUserAndPosts(data.id as number);
+            // Então depois de excluir os posts do usuário excluímos o usuário.
+            return await prisma.user.delete({
+                where:{idUser:data.id}
             })
         }
     }
