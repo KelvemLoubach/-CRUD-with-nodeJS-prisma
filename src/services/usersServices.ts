@@ -38,7 +38,7 @@ export const userObjectFunctions = {
             where: { email: data.email }
         });
         // Se "user" for "null", cria um usuário passando como parâmetro o objeto "data". Senão, retorna o usuário existente no db.
-        if (!(user)) {
+        if (!user) {
             return await prisma.user.create({
                 data
             })

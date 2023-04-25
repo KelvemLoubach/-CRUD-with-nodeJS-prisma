@@ -1,31 +1,20 @@
-import { PrismaClient } from '@prisma/client';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.allPosts = void 0;
+const client_1 = require("@prisma/client");
 // Constante prisma recebe uma nova instância de prismaClient.
-const prisma = new PrismaClient();
-
-type alterPost = {
-    id?: number,
-    title: string,
-    body: string
-};
-
-type deletePost = {
-    id:number,
-    title?:string
-}
-
-// Exportando o objeto allPosts que contêm propriedades com valores que são funções assincrônas que fazem buscas no db.
-export const allPosts = {
-
+const prisma = new client_1.PrismaClient();
+// Exportadno o objeto allPosts que contêm propriedades com valores que são funções assincrônas que fazem buscas no db.
+exports.allPosts = {
     findAllPosts: async () => {
-        // Retornando com o método nativo do prisma "findMany" os posts que possuem o campo "published" com o valor true.
+        // Retornado com o método nativo do prisma "findMany" os posts que possuem o campo "published" com o valor true.
         return await prisma.post.findMany({
             where: {
                 published: true
             }
-        })
+        });
     },
-
-    createPost: async (authorId: number, body: string, title: string) => {
+    createPost: async (authorId, body, title) => {
         // Retornando o post criado com o método nativo do ORM prisma, "create". 
         return await prisma.post.create({
             data: {
@@ -33,10 +22,10 @@ export const allPosts = {
                 body,
                 title
             }
-        })
+        });
     },
     // Alterando um post.
-    changePost: async (data: alterPost) => {
+    changePost: async (data) => {
         // Verificando se o post existe no db.
         const post = await prisma.post.findUnique({
             where: { idPost: data.id }
@@ -53,28 +42,20 @@ export const allPosts = {
                     title: data.title
                 }
             });
-        };
+        }
+        ;
     },
-
-    deletePost: async (data:deletePost) => {
-        // Verificando se existe um post.
+    deletePost: async (data) => {
         const postDelete = await prisma.post.delete({
-            where:{idPost:data.id}
-        })
-        // Retornando se existir.
-        if(postDelete){
+            where: { idPost: data.id }
+        });
+        if (postDelete) {
             return postDelete;
         }
     },
-
-    deleteUserAndPosts: async (id:number) =>{
-        // Deletando os posts onde o campo "authorId" é "id".
+    deleteUserAndPosts: async (id) => {
         await prisma.post.deleteMany({
-            where:{authorId:id}
-        })
+            where: { authorId: id }
+        });
     }
-
 };
-
-
-
